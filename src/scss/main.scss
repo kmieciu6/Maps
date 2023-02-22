@@ -1,0 +1,13 @@
+@import "generic/reset";
+
+@import "settings/colors";
+@import "settings/fonts";
+@import "settings/mixins";
+
+@import "components/home";
+@import "components/maps";
+@import "components/history";
+@import "components/not_found_page";
+//@import "components/";
+
+@import "generic/base";
