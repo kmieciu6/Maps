@@ -1,14 +1,12 @@
 import {Link} from "react-router-dom";
+
 import {
     Box,
     Button,
-    ButtonGroup,
     Flex,
-    HStack,
     IconButton,
     Input,
     SkeletonText,
-    Text,
 } from '@chakra-ui/react'
 import {FaLocationArrow, FaTimes} from 'react-icons/fa';
 
@@ -37,7 +35,6 @@ const Home = () => {
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [cost, setCost] = useState('')
-    const [formData, setFormData] = useState({start: '', finish: '', price: ''});
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -81,27 +78,22 @@ const Home = () => {
         destiantionRef.current.value = ''
     }
 
-    const handleChange = (event) => {
-        const {name, value} = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    };
-
     const handleSubmit = (event) => {
         event.preventDefault();
+        const formData = {
+            start: originRef.current.value,
+            destination: destiantionRef.current.value,
+            distance,
+            cost,
+            duration
+        };
         localStorage.setItem('myFormData', JSON.stringify(formData));
     };
-
 
     return (
         <section id='home'>
             <Link to='/'>
                 <button className='btn_nav'>Strona główna</button>
-            </Link>
-            <Link to='/maps'>
-                <button className='btn_nav'>Mapa</button>
             </Link>
             <Link to='/history'>
                 <button className='btn_nav'>Historia</button>
@@ -144,69 +136,61 @@ const Home = () => {
                     zIndex='1'
                 >
                     <form onSubmit={handleSubmit}>
-                        <HStack spacing={2} justifyContent='space-between'>
-                            <Box flexGrow={1}>
-                                <Autocomplete>
-                                    <Input
-                                        type='text'
-                                        placeholder='Start'
-                                        ref={originRef}
-                                        name="start"
-                                        value={formData.start}
-                                        onChange={handleChange}
-                                    />
-                                </Autocomplete>
-                            </Box>
-                            <Box flexGrow={1}>
-                                <Autocomplete>
-                                    <Input
-                                        type='text'
-                                        placeholder='Cel'
-                                        ref={destiantionRef}
-                                        // name="finish"
-                                        // value={formData.finish}
-                                        // onChange={handleChange}
-                                    />
-                                </Autocomplete>
-                            </Box>
-
-                            <Box flexGrow={1}>
+                        <Box flexGrow={1}>
+                            <Autocomplete>
                                 <Input
                                     type='text'
-                                    placeholder='Cena za kilometr'
-                                    ref={fuelRef}
-                                    // name="price"
-                                    // value={formData.price}
-                                    // onChange={handleChange}
+                                    placeholder='Start'
+                                    ref={originRef}
+                                    name="start"
                                 />
-                            </Box>
-
-
-                            <ButtonGroup>
-                                <Button colorScheme='blue' type='submit' onClick={calculateRoute}>
-                                    Wyznacz trasę
-                                </Button>
-                                <IconButton
-                                    aria-label='center back'
-                                    icon={<FaTimes/>}
-                                    onClick={clearRoute}
+                            </Autocomplete>
+                        </Box>
+                        <Box flexGrow={1}>
+                            <Autocomplete>
+                                <Input
+                                    type='text'
+                                    placeholder='Cel'
+                                    ref={destiantionRef}
+                                    name="destination"
                                 />
-                            </ButtonGroup>
-                        </HStack>
-                        <HStack spacing={4} mt={4} justifyContent='space-between'>
-                            <Text>Dystans: {distance} </Text>
-                            <Text>Czas: {duration} </Text>
-                            <Text>Koszt: {cost} </Text>
-                            <IconButton
-                                aria-label='center back'
-                                icon={<FaLocationArrow/>}
-                                isRound
-                                onClick={() => {
-                                    map.panTo(center)
-                                    map.setZoom(7)
-                                }}
+                            </Autocomplete>
+                        </Box>
+
+                        <Box flexGrow={1}>
+                            <Input
+                                type='text'
+                                placeholder='Cena za kilometr'
+                                ref={fuelRef}
+                                // name="price"
+                                // value={formData.price}
+                                // onChange={handleChange}
                             />
-                        </HStack>
+                        </Box>
+
+
+                        <Button colorScheme='blue' onClick={calculateRoute}>
+                            Wyznacz trasę
+                        </Button>
+                        <IconButton
+                            aria-label='center back'
+                            icon={<FaTimes/>}
+                            onClick={clearRoute}
+                        />
+                        <p>Dystans: {distance} </p>
+                        <p>Czas: {duration} </p>
+                        <p>Koszt: {cost} </p>
+
+                        <IconButton
+                            aria-label='center back'
+                            icon={<FaLocationArrow/>}
+                            isRound
+                            onClick={() => {
+                                map.panTo(center)
+                                map.setZoom(7)
+                            }}
+                        />
+                        <Button colorScheme='red' type='submit'> Zapisz w historii</Button>
                     </form>
                 </Box>
             </Flex>
