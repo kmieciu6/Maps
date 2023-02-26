@@ -1,27 +1,11 @@
 import {Link} from "react-router-dom";
-
-import {
-    Box,
-    Button,
-    Flex,
-    IconButton,
-    Input,
-    SkeletonText,
-} from '@chakra-ui/react'
+import {Box, Button, Flex, IconButton, Input, SkeletonText,} from '@chakra-ui/react'
 import {FaLocationArrow, FaTimes} from 'react-icons/fa';
-
-import {
-    useJsApiLoader,
-    GoogleMap,
-    Marker,
-    Autocomplete,
-    DirectionsRenderer,
-} from '@react-google-maps/api';
-
+import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api';
 import React, {useRef, useState} from 'react';
+import LocalStorageRemove from "./LocalStorageRemove";
 
 const center = {lat: 52.412198, lng: 19.270678}
-
 
 const Home = () => {
 
@@ -35,6 +19,7 @@ const Home = () => {
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [cost, setCost] = useState('')
+    const [counter, setCounter] = useState(0);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -80,14 +65,17 @@ const Home = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const newValue = `Value ${counter + 1}`;
         const formData = {
             start: originRef.current.value,
             destination: destiantionRef.current.value,
             distance,
             cost,
-            duration
+            duration,
+            newValue
         };
-        localStorage.setItem('myFormData', JSON.stringify(formData));
+        setCounter(counter + 1);
+        localStorage.setItem(`myFormData${counter}`, JSON.stringify(formData));
     };
 
     return (
@@ -162,9 +150,6 @@ const Home = () => {
                                 type='text'
                                 placeholder='Cena za kilometr'
                                 ref={fuelRef}
-                                // name="price"
-                                // value={formData.price}
-                                // onChange={handleChange}
                             />
                         </Box>
 
