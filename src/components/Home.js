@@ -74,7 +74,10 @@ const Home = () => {
             newValue
         };
         setCounter(counter + 1);
-        localStorage.setItem(`myFormData${counter}`, JSON.stringify(formData));
+        // localStorage.setItem(`myFormData${counter}`, JSON.stringify(formData));
+
+        const key = `myFormData${counter}`;
+        localStorage.setItem(key, JSON.stringify(formData));
     };
 
     return (
