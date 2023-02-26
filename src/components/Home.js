@@ -107,12 +107,14 @@ const Home = () => {
 
     return (
         <section id='home'>
-            <Link to='/'>
-                <button className='btn_nav'>Strona główna</button>
-            </Link>
-            <Link to='/history'>
-                <button className='btn_nav'>Historia</button>
-            </Link>
+            <div className='nav'>
+                <Link to='/'>
+                    <button className='btn_nav'>Strona główna</button>
+                </Link>
+                <Link to='/history'>
+                    <button className='btn_nav'>Historia</button>
+                </Link>
+            </div>
             <Flex
                 position='relative'
                 flexDirection='column'
