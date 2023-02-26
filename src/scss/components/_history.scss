@@ -33,17 +33,20 @@
       align-items: center;
       width: 25%;
 
-
       h2 {
         font-size: 1.6rem;
         margin: 0 2rem;
+      }
+
+      .info {
+        border-bottom: 1px solid black;
+
       }
 
       p {
         font-size: 1rem;
       }
     }
-
   }
 
   h1 {

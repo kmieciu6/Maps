@@ -78,7 +78,6 @@ const History = () => {
                                     <p>Czas: {data.duration}</p>
                                     <p>Koszt: {data.cost}</p>
                                 </div>
-                                <hr/>
                             </div>
                         ))}
                     </div>
