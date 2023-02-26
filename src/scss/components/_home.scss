@@ -1,0 +1,25 @@
+#home {
+  .form {
+    display: flex;
+    justify-content: center;
+
+    div {
+      width: 100%;
+    }
+
+    .inputs {
+      margin-right: 2rem;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+
+  }
+  
+  Button {
+    margin: 0 1rem;
+  }
+}

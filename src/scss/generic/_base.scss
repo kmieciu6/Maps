@@ -30,3 +30,21 @@ p {
     font-size: 1rem;
   }
 }
+
+.nav {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem 0;
+
+  button {
+    //width: 7rem;
+    padding: 0.2rem 1.5rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: 1s;
+
+    &:hover {
+      background: cornflowerblue;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Flex, IconButton, Input, SkeletonText,} from '@chakra-ui/react'
-import {FaLocationArrow, FaTimes} from 'react-icons/fa';
-import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api';
+import {FaTimes} from 'react-icons/fa';
+import {useJsApiLoader, GoogleMap, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api';
 
 const LIBRARIES = ['places'];
 const center = {lat: 52.412198, lng: 19.270678}
@@ -136,7 +136,6 @@ const Home = () => {
                         }}
                         onLoad={map => setMap(map)}
                     >
-                        <Marker position={center}/>
                         {directionsResponse && (
                             <DirectionsRenderer directions={directionsResponse}/>
                         )}
@@ -150,67 +149,67 @@ const Home = () => {
                     shadow='base'
                     minW='container.md'
                     zIndex='1'
+
                 >
                     <form onSubmit={handleSubmit}>
-                        <Box flexGrow={1}>
-                            <Autocomplete>
-                                <Input
-                                    type='text'
-                                    placeholder='Start'
-                                    ref={originRef}
-                                    name="start"
-                                />
-                            </Autocomplete>
-                            {errors.start && <p style={{color: 'red'}}>{errors.start}</p>}
-                        </Box>
-                        <Box flexGrow={1}>
-                            <Autocomplete>
-                                <Input
-                                    type='text'
-                                    placeholder='Cel'
-                                    ref={destiantionRef}
-                                    name="destination"
-                                />
-                            </Autocomplete>
-                            {errors.destination && <p style={{color: 'red'}}>{errors.destination}</p>}
-                        </Box>
+                        <div className='form'>
+                            <div className='inputs'>
+                                <Autocomplete>
+                                    <Input
+                                        type='text'
+                                        placeholder='Start'
+                                        ref={originRef}
+                                        name="start"
+                                    />
+                                </Autocomplete>
+                                {errors.start && <p style={{color: 'red'}}>{errors.start}</p>}
+                                <Autocomplete>
+                                    <Input
+                                        type='text'
+                                        placeholder='Cel'
+                                        ref={destiantionRef}
+                                        name="destination"
+                                    />
+                                </Autocomplete>
+                                {errors.destination && <p style={{color: 'red'}}>{errors.destination}</p>}
+                                <div>
+                                    <Input
+                                        type='text'
+                                        placeholder='Cena za kilometr'
+                                        ref={fuelRef}
+                                    />
+                                </div>
+                                {errors.fuel && <p style={{color: 'red'}}>{errors.fuel}</p>}
+                            </div>
 
-                        <Box flexGrow={1}>
-                            <Input
-                                type='text'
-                                placeholder='Cena za kilometr'
-                                ref={fuelRef}
+                            <div className='info'>
+                                <p>Dystans: {distance} </p>
+                                <p>Czas: {duration} </p>
+                                <p>Koszt: {cost} </p>
+                            </div>
+                        </div>
+                        <div className='buttons'>
+
+                            <div className='button'>
+                                <Button
+                                    colorScheme='blue'
+                                    onClick={calculateRoute}>
+                                    Wyznacz i oblicz trasę
+                                </Button>
+                                <Button
+                                    colorScheme='red'
+                                    type='submit'>
+                                    Zapisz w historii
+                                </Button>
+                            </div>
+                            <IconButton
+                                aria-label='center back'
+                                background='silver'
+                                icon={<FaTimes/>}
+                                onClick={clearRoute}
                             />
-                            {errors.fuel && <p style={{color: 'red'}}>{errors.fuel}</p>}
-                        </Box>
-
-                        <Button colorScheme='blue' onClick={calculateRoute}>
-                            Wyznacz i oblicz trasę
-                        </Button>
-                        <IconButton
-                            aria-label='center back'
-                            icon={<FaTimes/>}
-                            onClick={clearRoute}
-                        />
-                        <p>Dystans: {distance} </p>
-                        <p>Czas: {duration} </p>
-                        <p>Koszt: {cost} </p>
-
-                        <IconButton
-                            aria-label='center back'
-                            icon={<FaLocationArrow/>}
-                            isRound
-                            onClick={() => {
-                                map.panTo(center)
-                                map.setZoom(7)
-                            }}
-                        />
-                        <Button
-                            colorScheme='red'
-                            type='submit'>
-                            Zapisz w historii
-                        </Button>
-                        {savedSuccessfully && (<p style={{color: 'green'}}>Dane zostały zapisane pomyślnie!</p>)}
+                            {savedSuccessfully && (<p style={{color: 'green'}}>Dane zostały zapisane pomyślnie!</p>)}
+                        </div>
                     </form>
                 </Box>
             </Flex>
