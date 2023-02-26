@@ -1,18 +1,13 @@
+import React, {useRef, useState} from 'react';
 import {Link} from "react-router-dom";
 import {Box, Button, Flex, IconButton, Input, SkeletonText,} from '@chakra-ui/react'
 import {FaLocationArrow, FaTimes} from 'react-icons/fa';
 import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api';
-import React, {useRef, useState} from 'react';
 
+const LIBRARIES = ['places'];
 const center = {lat: 52.412198, lng: 19.270678}
 
 const Home = () => {
-
-    const {isLoaded} = useJsApiLoader({
-        googleMapsApiKey: 'AIzaSyBjWWBUScQanlWtEzf-VLdfTIkflI_PEks',
-        libraries: ['places'],
-    })
-
     const [map, setMap] = useState(/** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
@@ -21,6 +16,11 @@ const Home = () => {
     const [counter, setCounter] = useState(0);
     const [errors, setErrors] = useState({});
     const [savedSuccessfully, setSavedSuccessfully] = useState(false);
+
+    const {isLoaded} = useJsApiLoader({
+        googleMapsApiKey: 'AIzaSyBjWWBUScQanlWtEzf-VLdfTIkflI_PEks',
+        libraries: LIBRARIES
+    })
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -104,7 +104,6 @@ const Home = () => {
             setSavedSuccessfully(false)
         }, 3000);
     };
-
 
     return (
         <section id='home'>
