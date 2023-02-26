@@ -51,7 +51,7 @@ const Home = () => {
         setDirectionsResponse(results)
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
-        setCost(financial((results.routes[0].legs[0].distance.value) * fuelRef.current.value / 1000) + ' zł')
+        setCost(financial((results.routes[0].legs[0].distance.value) * fuelRef.current.value.replace(",", ".") / 1000) + ' zł')
     }
 
     function clearRoute() {
@@ -74,7 +74,7 @@ const Home = () => {
             if (destiantionRef.current.value === '') {
                 errors.destination = 'Pole wymagane';
             }
-            if (fuelRef.current.value === '' || isNaN(fuelRef.current.value)) {
+            if (fuelRef.current.value === '' || isNaN(parseFloat(fuelRef.current.value))) {
                 errors.fuel = 'Pole wymagane i musi zawierać liczbę';
             }
             if (Object.keys(errors).length > 0) {
@@ -176,7 +176,7 @@ const Home = () => {
                         </Box>
 
                         <Button colorScheme='blue' onClick={calculateRoute}>
-                            Wyznacz trasę
+                            Wyznacz i oblicz trasę
                         </Button>
                         <IconButton
                             aria-label='center back'
