@@ -6,6 +6,11 @@ import NotFoundPage from './components/NotFoundPage'
 import LocalStorageRemove from "./components/LocalStorageRemove";
 
 function App() {
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
     return (
         <>
             <LocalStorageRemove/>

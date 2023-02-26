@@ -191,6 +191,7 @@ const Home = () => {
                         <div className='buttons'>
 
                             <div className='button'>
+
                                 <Button
                                     colorScheme='blue'
                                     onClick={calculateRoute}>
@@ -208,8 +209,9 @@ const Home = () => {
                                 icon={<FaTimes/>}
                                 onClick={clearRoute}
                             />
-                            {savedSuccessfully && (<p style={{color: 'green'}}>Dane zostały zapisane pomyślnie!</p>)}
                         </div>
+                        {savedSuccessfully && (
+                            <p className='accept'>Dane zostały zapisane pomyślnie!</p>)}
                     </form>
                 </Box>
             </Flex>
