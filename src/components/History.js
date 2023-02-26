@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 
 const History = () => {
     const [myData, setMyData] = useState([]);
+    const [count, setCount] = useState(1);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const myFormDataString = localStorage.getItem("myFormData");
@@ -35,6 +36,7 @@ const History = () => {
             }
         }
         setMyData(data);
+        setCount(data.length);
     }, []);
 
 
@@ -47,19 +49,17 @@ const History = () => {
                 <button className='btn_nav'>Historia</button>
             </Link>
             <h1>Historia</h1>
-
             {myData.map((data, index) => (
                 <div key={index}>
+                    <h2>{count - myData.length + index + 1}</h2>
                     <p>Start: {data.start}</p>
                     <p>Cel: {data.destination}</p>
                     <p>Dystans: {data.distance}</p>
                     <p>Czas: {data.duration}</p>
                     <p>Koszt: {data.cost}</p>
-                    <hr />
+                    <hr/>
                 </div>
             ))}
-
-
         </section>
     );
 };

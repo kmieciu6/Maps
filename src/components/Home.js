@@ -19,6 +19,7 @@ const Home = () => {
     const [duration, setDuration] = useState('')
     const [cost, setCost] = useState('')
     const [counter, setCounter] = useState(0);
+    const [errors, setErrors] = useState({});
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -63,22 +64,38 @@ const Home = () => {
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
-        const newValue = `Value ${counter + 1}`;
-        const formData = {
-            start: originRef.current.value,
-            destination: destiantionRef.current.value,
-            distance,
-            cost,
-            duration,
-            newValue
-        };
-        setCounter(counter + 1);
-        // localStorage.setItem(`myFormData${counter}`, JSON.stringify(formData));
+            event.preventDefault();
+            setErrors({});
 
-        const key = `myFormData${counter}`;
-        localStorage.setItem(key, JSON.stringify(formData));
-    };
+            const errors = {};
+            if (originRef.current.value === '') {
+                errors.start = 'Pole wymagane';
+            }
+            if (destiantionRef.current.value === '') {
+                errors.destination = 'Pole wymagane';
+            }
+            if (fuelRef.current.value === '' || isNaN(fuelRef.current.value)) {
+                errors.fuel = 'Pole wymagane i musi zawierać liczbę';
+            }
+            if (Object.keys(errors).length > 0) {
+                setErrors(errors);
+                return;
+            }
+
+            const newValue = `Value ${counter + 1}`;
+            const formData = {
+                start: originRef.current.value,
+                destination: destiantionRef.current.value,
+                distance,
+                cost,
+                duration,
+                newValue
+            };
+            setCounter(counter + 1);
+            const key = `myFormData${new Date().getTime()}`;
+            localStorage.setItem(key, JSON.stringify(formData));
+        }
+    ;
 
     return (
         <section id='home'>
@@ -135,6 +152,7 @@ const Home = () => {
                                     name="start"
                                 />
                             </Autocomplete>
+                            {errors.start && <p style={{color: 'red'}}>{errors.start}</p>}
                         </Box>
                         <Box flexGrow={1}>
                             <Autocomplete>
@@ -145,6 +163,7 @@ const Home = () => {
                                     name="destination"
                                 />
                             </Autocomplete>
+                            {errors.destination && <p style={{color: 'red'}}>{errors.destination}</p>}
                         </Box>
 
                         <Box flexGrow={1}>
@@ -153,8 +172,8 @@ const Home = () => {
                                 placeholder='Cena za kilometr'
                                 ref={fuelRef}
                             />
+                            {errors.fuel && <p style={{color: 'red'}}>{errors.fuel}</p>}
                         </Box>
-
 
                         <Button colorScheme='blue' onClick={calculateRoute}>
                             Wyznacz trasę
@@ -177,7 +196,11 @@ const Home = () => {
                                 map.setZoom(7)
                             }}
                         />
-                        <Button colorScheme='red' type='submit'> Zapisz w historii</Button>
+                        <Button
+                            colorScheme='red'
+                            type='submit'>
+                            Zapisz w historii
+                        </Button>
                     </form>
                 </Box>
             </Flex>
