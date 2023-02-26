@@ -20,6 +20,7 @@ const Home = () => {
     const [cost, setCost] = useState('')
     const [counter, setCounter] = useState(0);
     const [errors, setErrors] = useState({});
+    const [savedSuccessfully, setSavedSuccessfully] = useState(false);
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
@@ -64,38 +65,46 @@ const Home = () => {
     }
 
     const handleSubmit = (event) => {
-            event.preventDefault();
-            setErrors({});
+        event.preventDefault();
+        setErrors({});
 
-            const errors = {};
-            if (originRef.current.value === '') {
-                errors.start = 'Pole wymagane';
-            }
-            if (destiantionRef.current.value === '') {
-                errors.destination = 'Pole wymagane';
-            }
-            if (fuelRef.current.value === '' || isNaN(parseFloat(fuelRef.current.value))) {
-                errors.fuel = 'Pole wymagane i musi zawierać liczbę';
-            }
-            if (Object.keys(errors).length > 0) {
-                setErrors(errors);
-                return;
-            }
-
-            const newValue = `Value ${counter + 1}`;
-            const formData = {
-                start: originRef.current.value,
-                destination: destiantionRef.current.value,
-                distance,
-                cost,
-                duration,
-                newValue
-            };
-            setCounter(counter + 1);
-            const key = `myFormData${new Date().getTime()}`;
-            localStorage.setItem(key, JSON.stringify(formData));
+        const errors = {};
+        if (originRef.current.value === '') {
+            errors.start = 'Pole wymagane';
         }
-    ;
+        if (destiantionRef.current.value === '') {
+            errors.destination = 'Pole wymagane';
+        }
+        if (fuelRef.current.value === '' || isNaN(parseFloat(fuelRef.current.value))) {
+            errors.fuel = 'Pole wymagane i musi zawierać liczbę';
+        }
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+            return;
+        }
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+            return;
+        }
+
+        const newValue = `Value ${counter + 1}`;
+        const formData = {
+            start: originRef.current.value,
+            destination: destiantionRef.current.value,
+            distance,
+            cost,
+            duration,
+            newValue
+        };
+        setCounter(counter + 1);
+        const key = `myFormData${new Date().getTime()}`;
+        localStorage.setItem(key, JSON.stringify(formData));
+        setSavedSuccessfully(true);
+        setTimeout(() => {
+            setSavedSuccessfully(false)
+        }, 3000);
+    };
+
 
     return (
         <section id='home'>
@@ -105,7 +114,6 @@ const Home = () => {
             <Link to='/history'>
                 <button className='btn_nav'>Historia</button>
             </Link>
-            <h1>Strona główna</h1>
             <Flex
                 position='relative'
                 flexDirection='column'
@@ -201,6 +209,7 @@ const Home = () => {
                             type='submit'>
                             Zapisz w historii
                         </Button>
+                        {savedSuccessfully && (<p style={{color: 'green'}}>Dane zostały zapisane pomyślnie!</p>)}
                     </form>
                 </Box>
             </Flex>
