@@ -8,7 +8,7 @@ const LIBRARIES = ['places'];
 const center = {lat: 52.412198, lng: 19.270678}
 
 const Home = () => {
-    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+    const [, setMap] = useState(/** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
