@@ -3,7 +3,6 @@ import {Box, Button, Flex, IconButton, Input, SkeletonText,} from '@chakra-ui/re
 import {FaLocationArrow, FaTimes} from 'react-icons/fa';
 import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api';
 import React, {useRef, useState} from 'react';
-import LocalStorageRemove from "./LocalStorageRemove";
 
 const center = {lat: 52.412198, lng: 19.270678}
 
