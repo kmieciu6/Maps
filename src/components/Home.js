@@ -38,6 +38,23 @@ const Home = () => {
     }
 
     async function calculateRoute() {
+
+        const errors = {};
+        setErrors({});
+
+        if (originRef.current.value === '') {
+            errors.start = 'Pole wymagane';
+        }
+        if (destiantionRef.current.value === '') {
+            errors.destination = 'Pole wymagane';
+        }
+        if (fuelRef.current.value === '' || isNaN(parseFloat(fuelRef.current.value))) {
+            errors.fuel = 'Pole wymagane i musi zawierać liczbę';
+        }
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+        }
+
         if (originRef.current.value === '' || destiantionRef.current.value === '') {
             return
         }
@@ -67,8 +84,8 @@ const Home = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrors({});
-
         const errors = {};
+
         if (originRef.current.value === '') {
             errors.start = 'Pole wymagane';
         }
@@ -205,7 +222,7 @@ const Home = () => {
                             </div>
                             <IconButton
                                 aria-label='center back'
-                                background='silver'
+                                backgroundColor='silver'
                                 icon={<FaTimes/>}
                                 onClick={clearRoute}
                             />
