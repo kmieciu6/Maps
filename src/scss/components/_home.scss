@@ -9,6 +9,21 @@
 
     .inputs {
       margin-right: 2rem;
+
+      Input {
+        margin: .1rem 0;
+      }
+
+      .error {
+        color: red;
+        font-size: 1rem;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
     }
   }
 

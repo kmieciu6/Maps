@@ -99,10 +99,6 @@ const Home = () => {
             setErrors(errors);
             return;
         }
-        if (Object.keys(errors).length > 0) {
-            setErrors(errors);
-            return;
-        }
 
         const newValue = `Value ${counter + 1}`;
         const formData = {
@@ -179,7 +175,7 @@ const Home = () => {
                                         name="start"
                                     />
                                 </Autocomplete>
-                                {errors.start && <p style={{color: 'red'}}>{errors.start}</p>}
+                                {errors.start && <p className='error'>{errors.start}</p>}
                                 <Autocomplete>
                                     <Input
                                         type='text'
@@ -188,7 +184,7 @@ const Home = () => {
                                         name="destination"
                                     />
                                 </Autocomplete>
-                                {errors.destination && <p style={{color: 'red'}}>{errors.destination}</p>}
+                                {errors.destination && <p className='error'>{errors.destination}</p>}
                                 <div>
                                     <Input
                                         type='text'
@@ -196,7 +192,7 @@ const Home = () => {
                                         ref={fuelRef}
                                     />
                                 </div>
-                                {errors.fuel && <p style={{color: 'red'}}>{errors.fuel}</p>}
+                                {errors.fuel && <p className='error'>{errors.fuel}</p>}
                             </div>
 
                             <div className='info'>

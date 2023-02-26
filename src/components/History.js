@@ -53,7 +53,7 @@ const History = () => {
     }
 
     return (
-        <section>
+        <section id='history'>
             <div className='nav'>
                 <Link to='/'>
                     <button className='btn_nav'>Strona główna</button>
@@ -62,23 +62,32 @@ const History = () => {
                     <button className='btn_nav'>Historia</button>
                 </Link>
             </div>
-            <h1>Historia</h1>
-            <button onClick={handleDownloadPDF}>Pobierz PDF</button>
-            <div id="pdf">
-                {myData.map((data, index) => (
-                    <div key={index}>
-                        <h2>{count - myData.length + index + 1}</h2>
-                        <p>Start: {data.start}</p>
-                        <p>Cel: {data.destination}</p>
-                        <p>Dystans: {data.distance}</p>
-                        <p>Czas: {data.duration}</p>
-                        <p>Koszt: {data.cost}</p>
-                        <hr/>
+            {myData.length > 0 ? (
+                <>
+                    <div className='pdf'>
+                        <button onClick={handleDownloadPDF}>Pobierz PDF</button>
                     </div>
-                ))}
-            </div>
+                    <div id="pdf">
+                        {myData.map((data, index) => (
+                            <div key={index} className='data'>
+                                <h2>{count - myData.length + index + 1}</h2>
+                                <div className='info'>
+                                    <p>Start: {data.start}</p>
+                                    <p>Cel: {data.destination}</p>
+                                    <p>Dystans: {data.distance}</p>
+                                    <p>Czas: {data.duration}</p>
+                                    <p>Koszt: {data.cost}</p>
+                                </div>
+                                <hr/>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <h1>Brak danych do wyświetlenia.</h1>
+            )}
         </section>
-    );
+    )
 };
 
 export default History;
